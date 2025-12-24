@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  .dropdown-container {
+    margin: 20px auto;
+    max-width: 800px;
+    font-family: Larsseit, Arial, Helvetica, sans-serif;
+  }
+  
+  .dropdown-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+    display: inline-block;
+    max-width: 300px;
+  }
+  
+  select {
+    width: 100%;
+    padding: 12px 40px 12px 16px;
+    font-size: 14px;
+    font-family: Larsseit, Arial, Helvetica, sans-serif;
+    color: #333333;
+    background-color: #ffffff;
+    border: 1px solid #333333;
+    border-radius: 0;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  
+  select:hover {
+    border-color: #555555;
+  }
+  
+  select:focus {
+    border-color: #000000;
+  }
+  
+.dropdown-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-60%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #e67e22;
+    border-bottom: 2px solid #e67e22;
+    pointer-events: none;
+  }
+  
+  .chart-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+  }
+  
+  .chart-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .chart-frame.active {
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+  }
+</style>
+</head>
+<body>
+
+<div class="dropdown-container">
+  <div class="dropdown-wrapper">
+    <select id="chart-selector">
+      <option value="0">All noncommunicable diseases</option>
+      <option value="1">Cardiovascular diseases</option>
+      <option value="2">Chronic respiratory diseases</option>
+      <option value="3">Diabetes and kidney diseases</option>
+      <option value="4">Digestive diseases and cirrhosis</option>
+      <option value="5">Mental health disorders</option>
+      <option value="6">Neoplasms</option>
+      <option value="7">Neurological disorders</option>
+    </select>
+  </div>
+  
+  <div class="chart-wrapper" id="chart-container">
+    <div class="chart-frame active" data-disease="all">
+      <iframe title="Percent Change in Premature Deaths: All NCDs" aria-label="Choropleth map" id="datawrapper-chart-nToPK" src="https://datawrapper.dwcdn.net/nToPK/1/" scrolling="no" frameborder="0" style="border: none;" width="800" height="422" data-external="1"></iframe>
+    </div>
+    
+    <div class="chart-frame" data-disease="cardiovascular">
+      <iframe title="Percent Change in Premature Deaths: Cardiovascular Disease" aria-label="Choropleth map" id="datawrapper-chart-8fZZA" src="https://datawrapper.dwcdn.net/8fZZA/1/" scrolling="no" frameborder="0" style="border: none;" width="800" height="422" data-external="1"></iframe>
+    </div>
+    
+    <div class="chart-frame" data-disease="respiratory">
+     <iframe title="Percent Change in Premature Deaths: Chronic Respiratory Diseases" aria-label="Choropleth map" id="datawrapper-chart-yPvCg" src="https://datawrapper.dwcdn.net/yPvCg/1/" scrolling="no" frameborder="0" style="border: none;" width="800" height="422" data-external="1"></iframe>
+    </div>
+    
+    <div class="chart-frame" data-disease="diabetes">
+      <iframe title="Percent Change in Premature Deaths: Diabetes and Kidney Diseases" aria-label="Choropleth map" id="datawrapper-chart-aO1jA" src="https://datawrapper.dwcdn.net/aO1jA/1/" scrolling="no" frameborder="0" style="border: none;" width="800" height="422" data-external="1"></iframe>
+    </div>
+    
+    <div class="chart-frame" data-disease="digestive">
+      <iframe title="Percent Change in Premature Deaths: Digestive Diseases" aria-label="Choropleth map" id="datawrapper-chart-A7cXC" src="https://datawrapper.dwcdn.net/A7cXC/1/" scrolling="no" frameborder="0" style="border: none;" width="800" height="422" data-external="1"></iframe>
+    </div>
+    
+    <div class="chart-frame" data-disease="mental">
+      <iframe title="Percent Change in Premature Deaths: Mental Health Disorders" aria-label="Choropleth map" id="datawrapper-chart-wuGDB" src="https://datawrapper.dwcdn.net/wuGDB/1/" scrolling="no" frameborder="0" style="border: none;" width="800" height="422" data-external="1"></iframe>
+    </div>
+    
+    <div class="chart-frame" data-disease="neoplasms">
+      <iframe title="Percent Change in Premature Deaths: Neoplasms" aria-label="Choropleth map" id="datawrapper-chart-vpXjv" src="https://datawrapper.dwcdn.net/vpXjv/1/" scrolling="no" frameborder="0" style="border: none;" width="800" height="422" data-external="1"></iframe>
+    </div>
+    
+    <div class="chart-frame" data-disease="neurological">
+      <iframe title="Percent Change in Premature Deaths: Neurological Disorders" aria-label="Choropleth map" id="datawrapper-chart-8xgxs" src="https://datawrapper.dwcdn.net/8xgxs/1/" scrolling="no" frameborder="0" style="border: none;" width="800" height="422" data-external="1"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  const chartFrames = document.querySelectorAll('.chart-frame');
+  const selector = document.getElementById('chart-selector');
+  
+  selector.addEventListener('change', function() {
+    const index = parseInt(this.value);
+    
+    chartFrames.forEach((frame, i) => {
+      if (i === index) {
+        frame.classList.add('active');
+      } else {
+        frame.classList.remove('active');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
